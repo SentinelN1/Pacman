@@ -2,8 +2,8 @@
 
 #include "DynamicEntity.h"
 
-const unsigned int PACMAN_SIZE = 13;
-const float PACMAN_SPEED = 120.0;
+const float PACMAN_SIZE = 48;
+const float PACMAN_SPEED = 160;
 const sf::Color PACMAN_COLOUR = sf::Color::Yellow;
 
 class Pacman : public DynamicEntity {
@@ -16,7 +16,7 @@ public:
         colour_ = PACMAN_COLOUR;
     }
 
-    sf::Vector2f update(const float &elapsed_time) override {
+    sf::Vector2f update(const float &elapsed_time, const std::vector<Cell *> &cells) override {
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up) || sf::Keyboard::isKeyPressed(sf::Keyboard::W)) {
             direction_ = sf::Vector2f(0, -1);
         }
@@ -30,7 +30,23 @@ public:
             direction_ = sf::Vector2f(1, 0);
         }
 
-        position_ += elapsed_time * speed_ * direction_;
+        sf::Vector2f position = position_ + elapsed_time * speed_ * direction_;
+
+        sf::RectangleShape shape;
+        shape.setPosition(position);
+        shape.setSize(size_);
+
+        bool collision = false;
+        for (auto cell: cells) {
+            if (cell && shape.getGlobalBounds().intersects(cell->getBounds())) {
+                collision = true;
+                break;
+            }
+        }
+
+        if (!collision) {
+            position_ = position;
+        }
         return position_;
     }
 };

@@ -5,7 +5,7 @@
 
 class DynamicEntity : public Entity {
 protected:
-    float speed_{};
+    float speed_;
     sf::Vector2f direction_;
 
 public:
@@ -24,8 +24,25 @@ public:
         return speed_;
     }
 
-    virtual sf::Vector2f update(const float &elapsed_time) {
-        position_ += elapsed_time * speed_ * direction_;
+    virtual sf::Vector2f update(const float &elapsed_time, const std::vector<Cell *> &cells) {
+        sf::Vector2f position = position_ + elapsed_time * speed_ * direction_;
+
+        sf::RectangleShape shape;
+        shape.setPosition(position);
+        shape.setSize(size_);
+
+        bool collision = false;
+        for (auto cell: cells) {
+            if (cell && shape.getGlobalBounds().intersects(cell->getBounds())) {
+                collision = true;
+                break;
+            }
+        }
+
+        if (!collision) {
+            position_ = position;
+        }
+
         return position_;
     }
 

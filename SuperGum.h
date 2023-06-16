@@ -5,7 +5,6 @@
 const float SUPERGUM_SIZE = 6;
 const sf::Color SUPERGUM_COLOR = sf::Color(255, 184, 151);
 
-
 class SuperGum : public StaticEntity {
 public:
     SuperGum(const sf::Vector2f &position) {

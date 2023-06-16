@@ -7,7 +7,7 @@ protected:
     sf::RectangleShape shape_;
     sf::Vector2f position_;
     sf::Vector2f size_;
-    sf::Texture texture_;
+//    sf::Texture texture_;
     sf::Color colour_;
 
 public:
@@ -34,7 +34,7 @@ public:
         return size_;
     }
 
-    sf::FloatRect getBounds() {
+    sf::FloatRect getBounds() const {
         return shape_.getGlobalBounds();
     }
 

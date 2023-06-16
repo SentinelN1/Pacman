@@ -1,13 +1,11 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/Window.hpp>
+#include <SFML/Audio.hpp>
 #include <string>
 
 #include "game.h"
 
-const unsigned int CELL_SIZE = 16;
-const unsigned int WIDTH = 48;
-const unsigned int HEIGHT = 32;
-const std::string TITLE = "Genshin Impact.exe";
+const std::string TITLE = "GenshinImpact.exe";
 
 void handleEvents(sf::RenderWindow &window) {
     sf::Event event;
@@ -45,7 +43,7 @@ void update(sf::Clock &clock, Game &game) {
 }
 
 int main() {
-    Game game(CELL_SIZE, WIDTH, HEIGHT);
+    Game game;
     sf::RenderWindow window(sf::VideoMode(game.getScreenSize().x, game.getScreenSize().y), TITLE, sf::Style::Default);
 
     sf::Clock clock;
