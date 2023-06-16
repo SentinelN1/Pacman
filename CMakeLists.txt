@@ -5,7 +5,7 @@ set(CMAKE_CXX_STANDARD 17)
 
 include_directories(.)
 
-add_executable(Pacman Entity.h main.cpp)
+add_executable(Pacman Entity.h main.cpp AbstractFactory.h StaticEntity.h DynamicEntity.h Ghost.h Pacman.h Gum.h SuperGum.h)
 
 set(SFML_STATIC_LIBRARIES TRUE)
 

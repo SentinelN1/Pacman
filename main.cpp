@@ -8,9 +8,6 @@ const unsigned int CELL_SIZE = 16;
 const unsigned int WIDTH = 48;
 const unsigned int HEIGHT = 32;
 const std::string TITLE = "Genshin Impact.exe";
-const sf::Color PACMAN_COLOR = sf::Color(255, 255, 0);
-const sf::Color WALL_COLOR = sf::Color(33, 33, 222);
-const sf::Color GUM_COLOR = sf::Color(255, 184, 151);
 
 void handleEvents(sf::RenderWindow &window) {
     sf::Event event;
@@ -50,15 +47,6 @@ void update(sf::Clock &clock, Game &game) {
 int main() {
     Game game(CELL_SIZE, WIDTH, HEIGHT);
     sf::RenderWindow window(sf::VideoMode(game.getScreenSize().x, game.getScreenSize().y), TITLE, sf::Style::Default);
-
-//    sf::SoundBuffer buffer;
-//    if (!buffer.loadFromFile("C:/Users/egora/Downloads/Theme.wav")) {
-//        std::cout << "Unable to load the audio file.\n";
-//        return -1;
-//    }
-//    sf::Sound sound;
-//    sound.setBuffer(buffer);
-//    sound.play();
 
     sf::Clock clock;
     while (window.isOpen()) {
