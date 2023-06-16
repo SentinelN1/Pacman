@@ -24,7 +24,7 @@ public:
         return speed_;
     }
 
-    virtual sf::Vector2f update(const float &elapsed_time, const std::vector<Cell *> &cells) {
+    sf::Vector2f update(const float &elapsed_time, const std::vector<Cell *> &cells) {
         sf::Vector2f position = position_ + elapsed_time * speed_ * direction_;
 
         sf::RectangleShape shape;

@@ -30,7 +30,7 @@ void handleEvents(sf::RenderWindow &window) {
     }
 }
 
-void render(sf::RenderWindow &window, const Game &game) {
+void render(sf::RenderWindow &window, Game &game) {
     window.clear(sf::Color::Black);
     game.render(window);
     window.display();
