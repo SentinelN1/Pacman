@@ -10,27 +10,40 @@
 #include "SuperGum.h"
 #include "Pacman.h"
 #include "Ghost.h"
-//#include "AbstractFactory.h"
-#include "UserInterface.h"
+#include "AbstractFactory.h"
 
 const std::vector<std::string> MAP
-        {"### ##### ###",
-         "#A.........*#",
-         "#.####.####.#",
-         "#.#*.....B#.#",
-         "#.#.#####.#.#",
-         "#...#...#...#",
-         "#.#.#.#.#.#.#",
-         " .#...P...#. ",
-         "#.#.#.#.#.#.#",
-         "#...#...#...#",
-         "#.#.#####.#.#",
-         "#.#C.....*#.#",
-         "#.####.####.#",
-         "#*.........D#",
-         "### ##### ###"};
-
-const float WALL_PROBABILITY = 0.2;
+        {"############################",
+         "#............##............#",
+         "#.####.#####.##.#####.####.#",
+         "#*####.#####.##.#####.####*#",
+         "#.####.#####.##.#####.####.#",
+         "#..........................#",
+         "#.####.##.########.##.####.#",
+         "#.####.##.########.##.####.#",
+         "#......##....##....##......#",
+         "######.##### ## #####.######",
+         "######.##### ## #####.######",
+         "######.##     B    ##.######",
+         "######.## ###  ### ##.######",
+         "######.## #      # ##.######",
+         "      .   # I P C#   .      ",
+         "######.## #      # ##.######",
+         "######.## ######## ##.######",
+         "######.##          ##.######",
+         "######.## ######## ##.######",
+         "######.## ######## ##.######",
+         "#............##............#",
+         "#.####.#####.##.#####.####.#",
+         "#.####.#####.##.#####.####.#",
+         "#*..##....... p.......##..*#",
+         "###.##.##.########.##.##.###",
+         "###.##.##.########.##.##.###",
+         "#......##....##....##......#",
+         "#.##########.##.##########.#",
+         "#.##########.##.##########.#",
+         "#..........................#",
+         "############################"};
 
 class Game {
 private:
@@ -44,8 +57,6 @@ private:
     std::list<Ghost *> ghosts_;
     Pacman *pacman_;
 
-    UserInterface UI_;
-
 public:
     Game() {
         // Generate map
@@ -58,28 +69,48 @@ public:
 
         cells_ = std::vector<Cell *>(map_width_ * map_height_);
 
+        GhostFactory *factory = nullptr;
+
         for (size_t y = 0; y < map_height_; ++y) {
             std::string str = map[y];
             for (size_t x = 0; x < map_width_; ++x) {
                 sf::Vector2f position(cell_size_ * x, cell_size_ * y);
                 if (str[x] == '#') {
                     cells_[y * map_width_ + x] = new Cell(position);
-                }
-                if (str[x] == '.') {
+                } else if (str[x] == '.') {
                     gums_.push_back(
                             new Gum(position + 0.5f * sf::Vector2f(CELL_SIZE - GUM_SIZE, CELL_SIZE - GUM_SIZE)));
-                }
-                if (str[x] == '*') {
+                } else if (str[x] == '*') {
                     supergums_.push_back(new SuperGum(
                             position + 0.5f * sf::Vector2f(CELL_SIZE - SUPERGUM_SIZE, CELL_SIZE - SUPERGUM_SIZE)));
-                }
-                if (str[x] == 'P') {
+                } else if (str[x] == 'p') {
                     pacman_ = new Pacman(sf::Vector2f(
                             position + 0.5f * sf::Vector2f(CELL_SIZE - PACMAN_SIZE, CELL_SIZE - PACMAN_SIZE)));
+                } else if (str[x] == 'B') {
+                    factory = new BlinkyFactory;
+                    Ghost *ghost = factory->createGhost(
+                            position + 0.5f * sf::Vector2f(CELL_SIZE - GHOST_SIZE, CELL_SIZE - GHOST_SIZE));
+                    ghosts_.push_back(ghost);
+                } else if (str[x] == 'C') {
+                    factory = new ClydeFactory;
+                    Ghost *ghost = factory->createGhost(
+                            position + 0.5f * sf::Vector2f(CELL_SIZE - GHOST_SIZE, CELL_SIZE - GHOST_SIZE));
+                    ghosts_.push_back(ghost);
+                } else if (str[x] == 'I') {
+                    factory = new InkyFactory;
+                    Ghost *ghost = factory->createGhost(
+                            position + 0.5f * sf::Vector2f(CELL_SIZE - GHOST_SIZE, CELL_SIZE - GHOST_SIZE));
+                    ghosts_.push_back(ghost);
+                } else if (str[x] == 'P') {
+                    factory = new PinkyFactory;
+                    Ghost *ghost = factory->createGhost(
+                            position + 0.5f * sf::Vector2f(CELL_SIZE - GHOST_SIZE, CELL_SIZE - GHOST_SIZE));
+                    ghosts_.push_back(ghost);
                 }
             }
         }
 
+        delete factory;
     }
 
     sf::Vector2f getScreenSize() const {
@@ -105,9 +136,9 @@ public:
             pacman_->eatGum(gums_, supergums_);
         }
 
-//        for (auto ghost: ghosts_) {
-//            ghost->update(elapsed_time, cells_);
-//        }
+        for (auto ghost: ghosts_) {
+            ghost->update(elapsed_time, cells_);
+        }
     }
 
     void render(sf::RenderWindow &window) const {

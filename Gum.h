@@ -2,7 +2,7 @@
 
 #include "StaticEntity.h"
 
-const float GUM_SIZE = 16;
+const float GUM_SIZE = 8;
 const sf::Color GUM_COLOR = sf::Color(255, 184, 151);
 
 class Gum : public StaticEntity {

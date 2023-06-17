@@ -2,8 +2,8 @@
 
 #include "DynamicEntity.h"
 
-const float PACMAN_SIZE = 36;
-const float PACMAN_SPEED = 200;
+const float PACMAN_SIZE = 20;
+const float PACMAN_SPEED = 120;
 
 const sf::Color PACMAN_COLOUR = sf::Color::Yellow;
 
@@ -47,9 +47,17 @@ public:
         for (auto it = supergums.begin(); it != supergums.end(); ++it) {
             if (getBounds().intersects((*it)->getBounds())) {
                 supergums.erase(it);
-                ++gums_eaten;
+                ++supergums_eaten;
                 break;
             }
         }
+    }
+
+    unsigned int getEatenGums() const {
+        return gums_eaten;
+    }
+
+    unsigned int getEatenSuperGums() const {
+        return supergums_eaten;
     }
 };

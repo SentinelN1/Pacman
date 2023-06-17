@@ -2,7 +2,7 @@
 
 #include "StaticEntity.h"
 
-const float SUPERGUM_SIZE = 32;
+const float SUPERGUM_SIZE = 16;
 const sf::Color SUPERGUM_COLOR = sf::Color(255, 184, 151);
 
 class SuperGum : public StaticEntity {

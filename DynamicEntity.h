@@ -13,8 +13,7 @@ public:
     explicit DynamicEntity(const sf::Vector2f &position,
                            const float &speed,
                            const float &size,
-                           const sf::Color colour)
-            : StaticEntity(position, size, colour) {
+                           const sf::Color colour) : StaticEntity(position, size, colour) {
         speed_ = speed;
         direction_ = sf::Vector2f(0, 0);
     }

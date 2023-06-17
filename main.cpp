@@ -4,8 +4,7 @@
 #include <string>
 
 #include "game.h"
-
-const std::string TITLE = "GenshinImpact.exe";
+#include "UserInterface.h"
 
 void handleEvents(sf::RenderWindow &window) {
     sf::Event event;
@@ -30,9 +29,11 @@ void handleEvents(sf::RenderWindow &window) {
     }
 }
 
-void render(sf::RenderWindow &window, Game &game) {
+void render(sf::RenderWindow &window, Game &game, UserInterface &UI) {
     window.clear(sf::Color::Black);
     game.render(window);
+    UI.render();
+
     window.display();
 }
 
@@ -44,12 +45,16 @@ void update(sf::Clock &clock, Game &game) {
 
 int main() {
     Game game;
-    sf::RenderWindow window(sf::VideoMode(game.getScreenSize().x, game.getScreenSize().y), TITLE, sf::Style::Default);
+    sf::RenderWindow window(sf::VideoMode(game.getScreenSize().x, game.getScreenSize().y),
+                            "GenshinImpact.exe",
+                            sf::Style::Default);
+
+    UserInterface UI(window, game);
 
     sf::Clock clock;
     while (window.isOpen()) {
         handleEvents(window);
-        render(window, game);
+        render(window, game, UI);
         update(clock, game);
         clock.restart();
     }
