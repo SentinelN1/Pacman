@@ -1,19 +1,30 @@
 #pragma once
 
-#include "Entity.h"
+#include "StaticEntity.h"
 #include <cmath>
 
-class DynamicEntity : public Entity {
+class DynamicEntity : public StaticEntity {
 protected:
     float speed_;
     sf::Vector2f direction_;
+//    sf::CircleShape shape_;
 
 public:
+    explicit DynamicEntity(const sf::Vector2f &position,
+                           const float &speed,
+                           const float &size,
+                           const sf::Color colour)
+            : StaticEntity(position, size, colour) {
+        speed_ = speed;
+        direction_ = sf::Vector2f(0, 0);
+    }
+
     sf::Vector2f getDirection() const {
         return direction_;
     }
 
     sf::Vector2f setDirection(const sf::Vector2f direction) {
+        // Normalize direction vector
         float norm = sqrt(direction.x * direction.x + direction.y * direction.y);
         direction_ = direction / norm;
         return direction_;
