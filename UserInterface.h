@@ -11,14 +11,13 @@ private:
     sf::Font font_;
 
 public:
-    UserInterface(sf::RenderWindow &window, Game &game) {
+    UserInterface(Game &game) {
         score_ = 0;
-        window_ = &window;
         game_ = &game;
         font_.loadFromFile("C:\\Users\\egora\\Documents\\Projects\\Pacman\\arcade.ttf");
     }
 
-    void render() {
+    void render(sf::RenderWindow &window) {
         Pacman *pacman = game_->getPacman();
         score_ = 10 * pacman->getEatenGums() + 100 * pacman->getEatenSuperGums();
         sf::Text text;
@@ -27,6 +26,6 @@ public:
         text.setString("Score: " + std::to_string(score_));
         text.setCharacterSize(24);
         text.setFillColor(sf::Color::White);
-        window_->draw(text);
+        window.draw(text);
     }
 };
